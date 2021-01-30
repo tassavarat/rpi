@@ -14,4 +14,5 @@ int main()
 		digitalWrite(p1, LOW);
 		sleep(1);
 	}
+	return 0;
 }
