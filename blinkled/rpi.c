@@ -14,7 +14,7 @@ void gpio_setup(volatile unsigned int **gpio)
 		exit(1);
 	}
 
-	map = mmap(NULL, BLOCK_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, GPIO_BASE);
+	map = mmap(NULL, sysconf(_SC_PAGE_SIZE), PROT_READ | PROT_WRITE, MAP_SHARED, fd, GPIO_BASE);
 	close(fd);
 	if (map == MAP_FAILED) {
 		perror("mmap() error");
