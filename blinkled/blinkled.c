@@ -4,14 +4,12 @@
 
 int main()
 {
-	volatile unsigned int *gpio;
-
-	gpio_setup(&gpio);
-	INP_GPIO(LED_PIN), OUT_GPIO(LED_PIN);
+	gpio_setup();
+	gpio_dir(LED_PIN, GPIO_OUT);
 	while (1) {
-		GPIO_SET = 1 << LED_PIN;
+		gpio_set(LED_PIN, 1);
 		sleep(1);
-		GPIO_CLR = 1 << LED_PIN;
+		gpio_set(LED_PIN, 0);
 		sleep(1);
 	}
 	return 0;
