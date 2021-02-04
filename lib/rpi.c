@@ -1,4 +1,4 @@
-#include "rpi.h"
+#include "../include/rpi.h"
 
 /**
  * gpio_setup - set up memory regions to access GPIO
