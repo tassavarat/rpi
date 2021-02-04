@@ -1,5 +1,4 @@
 #include "rpi.h"
-#include <sys/stat.h>
 
 #define LED_PIN	17
 
