@@ -14,4 +14,9 @@
 #define GPIO_SET	*(gpio + 7)	/* sets bits which are 1, ignores bits which are 0 */
 #define GPIO_CLR	*(gpio + 10)	/* clears bits which are 1, ignores bits which are 0 */
 
+#define GPIO_READ	*(gpio + 13) & (1 << g)
+
+#define GPIO_PULL	*(gpio + 37)
+#define GPIO_PULLCLK0	*(gpio + 38)
+
 void gpio_setup(volatile unsigned int **gpio);
