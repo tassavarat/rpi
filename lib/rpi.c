@@ -3,16 +3,50 @@
 static volatile unsigned int *gpio;
 
 /**
+ * gpio_read - read value of pin
+ * @pin:	pin to read
+ *
+ * Return:	value of pin
+ */
+unsigned int gpio_read(const unsigned int pin)
+{
+	return GPIO_READ(pin);
+}
+
+/**
+ * gpio_pud - pull pin up or down
+ * @pin:	pin to pull
+ * @mode:	specifies up or down
+ */
+void gpio_pud(const unsigned int pin, const int mode)
+{
+	if (mode != PULL_UP && mode != PULL_DOWN)
+		return;
+
+	int pull_reg, pull_shift;
+	unsigned int pull_bits;
+
+	pull_reg = 57 + (pin >> 4);
+	pull_shift = (pin & 0xf) << 1;
+	pull_bits = *(gpio + pull_reg);
+	pull_bits &= ~(3 << pull_shift);
+	pull_bits |= (mode << pull_shift);
+	*(gpio + pull_reg) = pull_bits;
+}
+
+/**
  * gpio_set - set or clear gpio bits
  * @pin:	pin to modify
  * @mode:	specifies set or clear
  */
-void gpio_set(const uint pin, int mode)
+void gpio_set(const unsigned int pin, const int mode)
 {
 	if (mode == 1)
 		GPIO_SET = 1 << pin;
-	else
+	else if (mode == 0)
 		GPIO_CLR = 1 << pin;
+	else
+		return;
 }
 
 /**
@@ -20,11 +54,16 @@ void gpio_set(const uint pin, int mode)
  * @pin:	pin to set
  * @dir:	specifies input or output
  */
-void gpio_dir(const uint pin, int dir)
+void gpio_dir(const unsigned int pin, const int dir)
 {
-	INP_GPIO(pin);
-	if (dir == GPIO_OUT)
+	if (dir == GPIO_INP) {
+		INP_GPIO(pin);
+	} else if (dir == GPIO_OUT) {
+		INP_GPIO(pin);
 		OUT_GPIO(pin);
+	} else {
+		return;
+	}
 }
 
 /**
