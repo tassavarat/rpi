@@ -1,20 +1,6 @@
 #include "../include/rpi.h"
 
 static volatile unsigned int *gpio;
-static volatile unsigned int *pwm;
-
-static unsigned int gpioToPwmPort [] =
-{
-	0,         0,         0,         0,         0,         0,         0,         0,	//  0 ->  7
-	0,         0,         0,         0, PWM0_DATA, PWM1_DATA,         0,         0, //  8 -> 15
-	0,         0, PWM0_DATA, PWM1_DATA,         0,         0,         0,         0, // 16 -> 23
-	0,         0,         0,         0,         0,         0,         0,         0,	// 24 -> 31
-	0,         0,         0,         0,         0,         0,         0,         0,	// 32 -> 39
-	PWM0_DATA, PWM1_DATA, 0,         0,         0, PWM1_DATA,         0,         0,	// 40 -> 47
-	0,         0,         0,         0,         0,         0,         0,         0,	// 48 -> 55
-	0,         0,         0,         0,         0,         0,         0,         0	// 56 -> 63
-
-};
 
 /**
  * gpio_read - read value of pin
@@ -46,11 +32,6 @@ void gpio_pud(const unsigned int pin, const int mode)
 	pull_bits &= ~(3 << pull_shift);
 	pull_bits |= (mode << pull_shift);
 	*(gpio + pull_reg) = pull_bits;
-}
-
-void pwm_set(const unsigned int pin, const unsigned int val)
-{
-	*(pwm + gpioToPwmPort[pin]) = val;
 }
 
 /**
@@ -100,18 +81,11 @@ void gpio_setup()
 	}
 
 	map = mmap(NULL, sysconf(_SC_PAGE_SIZE), PROT_READ | PROT_WRITE, MAP_SHARED, fd, GPIO_BASE);
+	close(fd);
 	if (map == MAP_FAILED) {
 		perror("mmap() error");
 		exit(1);
 	}
 
 	gpio = map;
-	map = mmap(NULL, sysconf(_SC_PAGE_SIZE), PROT_READ | PROT_WRITE, MAP_SHARED, fd, GPIO_PWM);
-	close(fd);
-	if (map == MAP_FAILED) {
-		perror("map() error");
-		exit(1);
-	}
-
-	pwm = map;
 }
