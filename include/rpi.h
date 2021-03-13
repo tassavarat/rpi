@@ -27,10 +27,10 @@ enum {
 	PULL_DOWN
 };
 
-void gpio_setup();
-void gpio_dir(const unsigned int pin, const int dir);
-void gpio_set(const unsigned int pin, const int mode);
-void gpio_pud(const unsigned int pin, const int mode);
+int gpio_setup();
+int gpio_dir(const unsigned int pin, const int dir);
+int gpio_set(const unsigned int pin, const int mode);
+int gpio_pud(const unsigned int pin, const int mode);
 unsigned int gpio_read(const unsigned int pin);
 
 #endif /* RPI_H */
