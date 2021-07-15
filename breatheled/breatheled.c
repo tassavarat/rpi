@@ -8,19 +8,27 @@ int main()
 	struct timespec req;
 
 	req.tv_sec = 0;
-	req.tv_nsec = 1000000;
-	gpio_setup();
-	gpio_dir(LED_PIN, PWM_OUT);
+	if (gpio_setup() == 1)
+		return 1;
+
+	if (soft_pwm_setup(LED_PIN, 0, 100) == 1)
+		return 1;
 
 	while (1) {
-		for (i = 0; i < 1024; ++i) {
-			pwm_set(LED_PIN, i);
+		for (i = 0; i < 100; ++i) {
+			soft_pwm_set(LED_PIN, i);
+			req.tv_nsec = 20000000;
 			nanosleep(&req, NULL);
 		}
-		for (i = 1024; i > -1; --i) {
-			pwm_set(LED_PIN, i);
+		req.tv_nsec = 300000000;
+		nanosleep(&req, NULL);
+		for (i = 100; i > -1; --i) {
+			soft_pwm_set(LED_PIN, i);
+			req.tv_nsec = 20000000;
 			nanosleep(&req, NULL);
 		}
+		req.tv_nsec = 300000000;
+		nanosleep(&req, NULL);
 	}
 	return 0;
 }
