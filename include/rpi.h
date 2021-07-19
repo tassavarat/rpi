@@ -31,11 +31,14 @@ enum {
 	PULL_DOWN
 };
 
+/* gpio.c */
 int gpio_setup();
 int gpio_dir(const unsigned int pin, const int dir);
 int gpio_set(const unsigned int pin, const int mode);
 int gpio_pud(const unsigned int pin, const int mode);
 unsigned int gpio_read(const unsigned int pin);
+
+/* soft_pwm.c */
 int soft_pwm_setup(const unsigned int pin, const unsigned int start_val, const unsigned int range);
 int soft_pwm_set(const unsigned int pin, unsigned int val);
 
