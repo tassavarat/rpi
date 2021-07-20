@@ -1,4 +1,4 @@
-#include "../../include/rpi.h"
+#include "rpi.h"
 
 #define LED_PIN	18
 

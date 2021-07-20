@@ -1,4 +1,4 @@
-#include "../../include/rpi.h"
+#include "rpi.h"
 
 #define LEDCOUNT	10
 int PIN_AR[LEDCOUNT] =	{17, 18, 27, 22, 23, 24, 25, 5, 6, 12};

@@ -1,4 +1,4 @@
-#include "../../include/rpi.h"
+#include "rpi.h"
 
 #define BUZZER_PIN	17
 #define BTN_PIN		18
