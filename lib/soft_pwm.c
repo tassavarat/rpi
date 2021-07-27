@@ -1,4 +1,4 @@
-#include "../include/rpi.h"
+#include "rpi.h"
 
 static volatile unsigned int start_val_arr[MAX_PINS];
 static volatile unsigned int range_arr[MAX_PINS];
