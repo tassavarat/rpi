@@ -2,6 +2,7 @@
 #define RPI_H
 
 #include <fcntl.h>
+#include <math.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +14,8 @@
 #define GPIO_BASE		BCM2711_PERI_BASE + 0x200000
 #define GPIO_PWM		BCM2711_PERI_BASE + 0x20C000
 
-#define MAX_PINS		28
+/* 28 */
+#define MAX_PINS		64
 #define VALID_PIN(g)		(g < MAX_PINS)
 
 /* GPIO setup macros. Always use INP_GPIO(x) before using OUT_GPIO(x) */
@@ -42,4 +44,7 @@ unsigned int gpio_read(const unsigned int pin);
 int soft_pwm_setup(const unsigned int pin, const unsigned int start_val, const unsigned int range);
 int soft_pwm_set(const unsigned int pin, unsigned int val);
 
+/* soft_sound.c */
+int soft_sound_setup(const unsigned int pin);
+void soft_sound_set(unsigned int pin, unsigned int val);
 #endif /* RPI_H */
